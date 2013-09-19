@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,12 +36,13 @@ public class UserManageAjaxController {
 	
 	private Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
-	public void addUser(@ModelAttribute("ucd") UserControllerDomain ucd) {
+	public String addUser(@RequestBody String ucd) {
 
-		userService.create(DomainControllertoDomain.UserControllertoUser(ucd));
-
+//UserControllerDomain usd = gson.fromJson(ucd, UserControllerDomain.class);
+		userService.create(DomainControllertoDomain.UserControllertoUser(gson.fromJson(ucd, UserControllerDomain.class)));
+return "Oke";
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)

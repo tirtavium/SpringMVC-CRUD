@@ -10,27 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="userId" , unique=true, nullable=false)
-	 private Long userId;
-	
-	
-	@Column(name="userName", unique=true, nullable=false)
+	@Column(name = "userId", unique = true, nullable = false)
+	private Long userId;
+
+	@Column(name = "userName", unique = true, nullable = false)
 	private String username;
-	
-	@Column(name="password", nullable=false)
+
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="user", cascade=CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private UserInfo userInfo;
-	
-	
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -62,7 +59,5 @@ public class User {
 	public void setUserInfo(UserInfo userInfo) {
 		this.userInfo = userInfo;
 	}
-	
-	
-	
+
 }

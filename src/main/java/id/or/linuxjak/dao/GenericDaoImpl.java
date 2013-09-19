@@ -42,8 +42,6 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 		return hibernate.get(t, id);
 	}
 
-	
-
 	public void create(T t) {
 		// TODO Auto-generated method stub
 		hibernate.saveOrUpdate(t);
@@ -53,13 +51,10 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 		// TODO Auto-generated method stub
 		hibernate.delete(t);
 	}
-	
-
-	
 
 	public void update(T t) {
 		// TODO Auto-generated method stub
-		//hibernate.getSessionFactory().getCurrentSession().update(t);
+		// hibernate.getSessionFactory().getCurrentSession().update(t);
 		hibernate.saveOrUpdate(t);
 	}
 

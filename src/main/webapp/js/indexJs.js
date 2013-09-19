@@ -5,14 +5,7 @@ $(function() {
 		datatype: 'json',
 		jsonReader : {
 		repeatitems:false,
-		total: function(result) {
-		//Total number of pages
-		return Math.ceil(result.total / result.max);
-		},
-		records: function(result) {
-		//Total number of records
-		return result.total;
-		}
+		
 		},
 		prmNames: {
 		page: "page.page",
@@ -32,7 +25,46 @@ $(function() {
 		});
 
 
+	$.extend($.jgrid.edit, {
+	closeAfterEdit: true,
+	closeAfterAdd: true,
+	
+	ajaxEditOptions: { contentType: "application/json" },
+	mtype: 'PUT',
+	serializeEditData: function(data) {
+	delete data.oper;
+	return JSON.stringify(data);
+	}
+	});
+	
+	$.extend($.jgrid.del, {
+	mtype: 'DELETE',
+	serializeDelData: function() {
+	return "";
+	}
+	});
+	
 
+	var editOptions = {
+	onclickSubmit: function(params, postdata) {
+	params.url = URL + '/' + postdata.id;
+	}
+	};
+	
+	var addOptions = {
+			mtype: "POST"
+					
+	};
+	
+	
+	var delOptions = {
+	onclickSubmit: function(params, postdata) {
+	params.url = delURL + '/' + postdata;
+	}
+	};
+	
+
+var delURL = 'users/delete'
 var URL = 'users/list';
 var options = {
   url: URL,
@@ -41,9 +73,11 @@ var options = {
     {
       name:'id', label: 'ID',
       formatter:'integer',
+   
       width: 40,
+      
       editable: true,
-      editoptions: {disabled: true, size:5}
+   //   editoptions: {disabled: true, size:5}
     },
     {
       name:'username',
@@ -52,6 +86,25 @@ var options = {
       editable: true,
       editrules: {required: true}
     },
+    {
+        name:'password',
+        label: 'password',
+       
+        editable: true,
+     
+        editrules: {required:true}
+       
+      },
+      {
+          name:'passwordConfirm',
+          label: 'Password Confirm',
+      
+          editable: true,
+         
+          editrules: {required:true}
+         
+        },
+      
     {
       name:'name',
       label: 'Name',
@@ -62,15 +115,16 @@ var options = {
     {
       name:'lastName',
       label: 'Last Name',
-      hidden: true,
+     
       editable: true,
-      edittype: 'select',
+    
       editrules: {required:true}
      
     },
+    
     {
       name:'address',
-      label: 'aAddress',
+      label: 'Address',
       width: 80,
       align: 'center',
       editable: true,
@@ -79,19 +133,25 @@ var options = {
     },
     {
       name:'job',
-      label: 'Available',
-      formatter: 'checkbox',
+      label: 'Job',
+     
       width: 46,
       align: 'center',
       editable: true,
-      edittype: 'checkbox',
-      editoptions: {value:"true:false"}
+    
     }
   ],
-  caption: "job",
- 
+  caption: "User Management",
+  pager : '#pager',
+
   height: 'auto'
 };
 $("#grid")
-    .jqGrid(options);
+    .jqGrid(options).navGrid('#pager',
+    		{}, //options
+    		editOptions,
+    		addOptions,
+    		delOptions,
+    		{} // search options
+    		);
 });

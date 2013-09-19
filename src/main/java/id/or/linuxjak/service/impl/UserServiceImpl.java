@@ -13,22 +13,21 @@ import id.or.linuxjak.service.common.ServiceHelperImpl;
 
 @Service("userService")
 @Transactional
-public class UserServiceImpl extends ServiceHelperImpl<User> implements UserService{
+public class UserServiceImpl extends ServiceHelperImpl<User> implements
+		UserService {
 
 	public List<User> getAll() {
 		// TODO Auto-generated method stub
 		return super.getAll(User.class);
 	}
-	
-	public User findUserbyId(Long id){
+
+	public User findUserbyId(Long id) {
 		return super.find(User.class, id);
 	}
 
-	
-	public void update(User user){
+	public void update(User user) {
 
 		genericDao.update(user);
 	}
-	
-	
+
 }

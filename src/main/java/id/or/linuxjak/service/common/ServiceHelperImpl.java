@@ -50,7 +50,7 @@ public abstract class ServiceHelperImpl<T> implements ServiceHelper<T> {
 	@Transactional
 	public void update(T t) {
 		// TODO Auto-generated method stub
-	
+
 		genericDao.update(t);
 
 	}
